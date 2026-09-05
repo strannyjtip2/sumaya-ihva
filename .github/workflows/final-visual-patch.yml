@@ -1,0 +1,82 @@
+name: Final visual patch
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, '[auto-patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch header logo and mobile category arrows
+        shell: python
+        run: |
+          from pathlib import Path
+
+          marker = '/* v0.26 — transparent header brand + left category arrows */'
+          css = r'''
+          /* v0.26 — transparent header brand + left category arrows */
+          .top .logo{
+            width:132px;
+            height:46px;
+            min-width:132px;
+            background:url('sumaya-logo.svg') left center/contain no-repeat;
+            justify-items:start;
+          }
+          .top .logo .logoMain,.top .logo .logoSub{display:none}
+          @media(max-width:760px){
+            .top .logo{width:116px;height:40px;min-width:116px}
+            .visualCatTitle{max-width:76%}
+            .visualCatArrow{
+              left:17px!important;
+              right:auto!important;
+              top:auto!important;
+              bottom:13px!important;
+              width:auto!important;
+              height:auto!important;
+              transform:none!important;
+              display:block!important;
+              border:0!important;
+              border-radius:0!important;
+              background:transparent!important;
+              font-size:23px!important;
+              line-height:1!important;
+            }
+          }
+          '''
+
+          for filename in ('index.html','dist/index.html'):
+            p = Path(filename)
+            text = p.read_text(encoding='utf-8')
+            if marker not in text:
+              text = text.replace('</style>', css + '\n</style>', 1)
+              p.write_text(text, encoding='utf-8')
+
+          svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" role="img" aria-label="SU MAYA by IHVA">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#c5a15a"/>
+              <stop offset="1" stop-color="#8d6a2f"/>
+            </linearGradient>
+          </defs>
+          <g fill="#1f3d33">
+            <text x="4" y="69" font-family="Optima, Palatino Linotype, Palatino, Georgia, serif" font-size="56" font-weight="400" letter-spacing="5">SU MAYA</text>
+            <text x="10" y="99" font-family="Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="5">BY IHVA</text>
+          </g>
+          <path d="M329 20c-14 21-23 32-23 46 0 16 11 27 25 27s25-11 25-27c0-14-10-25-27-46z" fill="url(#g)"/>
+          </svg>'''
+          Path('sumaya-logo.svg').write_text(svg, encoding='utf-8')
+          Path('dist/sumaya-logo.svg').write_text(svg, encoding='utf-8')
+      - name: Commit patched output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html dist/index.html sumaya-logo.svg dist/sumaya-logo.svg
+          git diff --cached --quiet && exit 0
+          git commit -m "[auto-patch] Finish header logo and category arrows"
+          git push
