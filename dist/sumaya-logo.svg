@@ -1,13 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" role="img" aria-label="SU MAYA by IHVA">
-<defs>
-  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#c5a15a"/>
-    <stop offset="1" stop-color="#8d6a2f"/>
-  </linearGradient>
-</defs>
-<g fill="#1f3d33">
-  <text x="4" y="69" font-family="Optima, Palatino Linotype, Palatino, Georgia, serif" font-size="56" font-weight="400" letter-spacing="5">SU MAYA</text>
-  <text x="10" y="99" font-family="Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="5">BY IHVA</text>
-</g>
-<path d="M329 20c-14 21-23 32-23 46 0 16 11 27 25 27s25-11 25-27c0-14-10-25-27-46z" fill="url(#g)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 285" role="img" aria-label="SU MAYA by IHVA">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0d18a"/>
+      <stop offset="0.35" stop-color="#c89a4b"/>
+      <stop offset="0.72" stop-color="#9c6b2e"/>
+      <stop offset="1" stop-color="#e6c87e"/>
+    </linearGradient>
+    <radialGradient id="drop" cx="35%" cy="25%" r="78%">
+      <stop offset="0" stop-color="#f6dc9c"/>
+      <stop offset="0.28" stop-color="#d5aa61"/>
+      <stop offset="0.62" stop-color="#a77635"/>
+      <stop offset="0.88" stop-color="#7b4f22"/>
+      <stop offset="1" stop-color="#c3934e"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset dy="2" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.28"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="#012d25">
+    <text x="72" y="176" font-family="Optima, 'Palatino Linotype', Palatino, Georgia, serif" font-size="144" font-weight="400" letter-spacing="2">SU</text>
+    <text x="370" y="176" font-family="Optima, 'Palatino Linotype', Palatino, Georgia, serif" font-size="144" font-weight="400" letter-spacing="2">MAYA</text>
+  </g>
+  <path d="M327 62 C303 100 278 133 278 166 C278 198 300 221 327 221 C354 221 376 198 376 166 C376 133 351 100 327 62 Z" fill="url(#drop)" stroke="#c79a50" stroke-width="2" filter="url(#soft)"/>
+  <path d="M305 126 C315 107 322 94 327 84 C334 96 344 112 351 128 C339 118 325 117 305 126 Z" fill="#f4daa0" opacity="0.55"/>
+  <line x1="92" y1="247" x2="278" y2="247" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="477" y1="247" x2="664" y2="247" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+  <text x="326" y="262" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="61" font-weight="400" fill="url(#gold)">by IHVA</text>
 </svg>
